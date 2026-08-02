@@ -1,0 +1,72 @@
+{% load static %}
+{# Reusable product card. Include with: {% include "partials/product_card.html" with product=product %} #}
+<div class="tesha-card position-relative h-100 d-flex flex-column">
+
+    {% if product.is_bestseller %}
+    <span class="tesha-badge">Bestseller</span>
+    {% elif product.is_new_arrival %}
+    <span class="tesha-badge">New</span>
+    {% endif %}
+
+    <button type="button" class="tesha-wishlist-toggle" data-product-id="{{ product.id }}" aria-label="Add {{ product.name }} to wishlist">
+        {% if product.id in wishlist_product_ids %}
+        <i class="bi bi-heart-fill" style="color: var(--tesha-terracotta);"></i>
+        {% else %}
+        <i class="bi bi-heart"></i>
+        {% endif %}
+    </button>
+
+    <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-reset">
+        <div class="tesha-card-img-wrap">
+            {% if product.primary_image %}
+            <img src="{{ product.primary_image.image.url }}" alt="{{ product.primary_image.alt_text|default:product.name }}" loading="lazy">
+            {% else %}
+            <img src="{% static 'img/placeholder-product.svg' %}" alt="{{ product.name }}" loading="lazy">
+            {% endif %}
+        </div>
+
+        <div class="px-3 pt-3">
+            <h3 class="h6 mb-1 text-truncate">{{ product.name }}</h3>
+
+            <div class="tesha-rating mb-1">
+                {% if product.review_count %}
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                            <i class="bi bi-star-fill"></i>
+                        {% elif forloop.counter|add:"-0.5" <= product.average_rating %}
+                            <i class="bi bi-star-half"></i>
+                        {% else %}
+                            <i class="bi bi-star"></i>
+                        {% endif %}
+                    {% endfor %}
+                    <span class="text-muted small">({{ product.review_count }})</span>
+                {% else %}
+                    <span class="text-muted small">No reviews yet</span>
+                {% endif %}
+            </div>
+
+            <div class="d-flex align-items-baseline gap-2">
+                <span class="tesha-price">&#8377;{{ product.price }}</span>
+                {% if product.is_on_sale %}
+                <span class="tesha-price-strike">&#8377;{{ product.compare_at_price }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </a>
+
+    <!-- Kept outside the <a> above: a <form>/<button> can't legally nest inside a link -->
+    <div class="p-3 pt-2 mt-auto">
+        {% if product.in_stock %}
+        <form method="post" action="{% url 'cart:add' product.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button type="submit" class="btn btn-tesha-primary btn-sm w-100">
+                <i class="bi bi-bag-plus me-1"></i> Add to Cart
+            </button>
+        </form>
+        {% else %}
+        <button type="button" class="btn btn-tesha-outline btn-sm w-100" disabled>Out of Stock</button>
+        {% endif %}
+    </div>
+</div>

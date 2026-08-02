@@ -1,0 +1,10 @@
+{% load static %}
+{# Reusable category tile. Include with: {% include "partials/category_card.html" with category=category %} #}
+<a href="{{ category.get_absolute_url }}" class="tesha-category-tile">
+    {% if category.image %}
+    <img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy">
+    {% else %}
+    <img src="{% static 'img/placeholder-category.svg' %}" alt="{{ category.name }}" loading="lazy">
+    {% endif %}
+    <span class="tesha-category-tile-label">{{ category.name }}</span>
+</a>

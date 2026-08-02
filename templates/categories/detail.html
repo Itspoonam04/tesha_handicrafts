@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} | Tesha Handicrafts{% endblock %}
+{% block meta_description %}{{ category.description|default:category.name }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" class="container pt-3">
+    <ol class="breadcrumb small mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'homepage:index' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'categories:list' %}">Categories</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+
+    <div class="mb-4">
+        <h1 class="tesha-display h3 mb-1">{{ category.name }}</h1>
+        {% if category.description %}
+        <p class="text-muted mb-0">{{ category.description }}</p>
+        {% endif %}
+        <p class="text-muted small mb-0">{{ products.count }} product{{ products.count|pluralize }}</p>
+    </div>
+
+    {% if products %}
+    <div class="row g-3 g-md-4">
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-3">
+            {% include "partials/product_card.html" with product=product %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-box-seam fs-1 text-muted mb-3 d-block"></i>
+        <h2 class="h5">No products in this category yet</h2>
+        <p class="text-muted">Add some from the Django admin panel, or check back soon.</p>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

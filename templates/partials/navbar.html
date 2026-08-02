@@ -1,0 +1,131 @@
+{# Main site navigation #}
+<header class="tesha-navbar sticky-top">
+    <div class="container px-3">
+        <nav class="navbar navbar-expand-lg py-2" aria-label="Main navigation">
+
+            <!-- 1. Hamburger Toggler (Moved to Far Left) -->
+            <button
+                class="navbar-toggler border-0 shadow-none p-1 me-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavCollapse"
+                aria-controls="mainNavCollapse"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 2. Brand Logo & Text (Centered/Flexible on Mobile) -->
+            <a class="navbar-brand mx-auto mx-lg-0 me-lg-4 d-flex align-items-center text-decoration-none py-0" href="{% url 'homepage:index' %}">
+                <!-- Mobile view: Text on left, Logo on right -->
+                <div class="tesha-mobile-brand-wrapper d-flex d-lg-none align-items-center">
+                    <span class="tesha-brand-text">Tesha Handicrafts</span>
+                    {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="tesha-navbar-logo">
+                    {% endif %}
+                </div>
+
+                <!-- Desktop view: Standard Logo or fallback text -->
+                <div class="d-none d-lg-flex align-items-center">
+                    {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="tesha-navbar-logo">
+                    {% else %}
+                    <span class="fs-4 fw-bold text-dark">{{ site_settings.site_name|default:"Tesha Handicrafts" }}</span>
+                    {% endif %}
+                </div>
+            </a>
+
+            <!-- 3. Right Action Icons (Wishlist & Cart on Far Right) -->
+            <div class="d-flex align-items-center gap-3 d-lg-none ms-2">
+                <a class="tesha-icon-link position-relative text-dark" href="{% url 'wishlist:detail' %}" aria-label="Wishlist">
+                    <i class="bi bi-heart fs-5"></i>
+                    {% if wishlist_item_count > 0 %}
+                    <span class="tesha-icon-badge">{{ wishlist_item_count }}</span>
+                    {% endif %}
+                </a>
+                <a class="tesha-icon-link position-relative text-dark" href="{% url 'cart:detail' %}" aria-label="Cart">
+                    <i class="bi bi-bag fs-5"></i>
+                    {% if cart_item_count > 0 %}
+                    <span class="tesha-icon-badge">{{ cart_item_count }}</span>
+                    {% endif %}
+                </a>
+            </div>
+
+            <!-- Search: full width on desktop between brand and icons -->
+            <form class="tesha-search-form d-none d-lg-flex flex-grow-1 mx-4" role="search" method="get" action="{% url 'products:list' %}">
+                <div class="input-group">
+                    <input
+                        type="search"
+                        name="q"
+                        class="form-control"
+                        placeholder="Search for handcrafted pottery, decor, textiles..."
+                        aria-label="Search products">
+                    <button class="btn" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Desktop Account / Wishlist / Cart icons -->
+            <ul class="navbar-nav flex-row align-items-center gap-3 order-lg-3 d-none d-lg-flex">
+                <li class="nav-item">
+                    <a href="{% url 'orders:order_list' %}" class="btn btn-sm btn-outline-secondary px-3">
+                        My Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="tesha-icon-link" href="{% url 'wishlist:detail' %}" aria-label="Wishlist">
+                        <i class="bi bi-heart"></i>
+                        {% if wishlist_item_count > 0 %}
+                        <span class="tesha-icon-badge">{{ wishlist_item_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="tesha-icon-link" href="{% url 'cart:detail' %}" aria-label="Cart">
+                        <i class="bi bi-bag"></i>
+                        {% if cart_item_count > 0 %}
+                        <span class="tesha-icon-badge">{{ cart_item_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Collapsible content drawer -->
+            <div class="collapse navbar-collapse order-lg-2 mt-2 mt-lg-0" id="mainNavCollapse">
+
+                <!-- Mobile Search Bar -->
+                <form class="tesha-search-form d-flex d-lg-none my-3" role="search" method="get" action="{% url 'products:list' %}">
+                    <div class="input-group">
+                        <input
+                            type="search"
+                            name="q"
+                            class="form-control"
+                            placeholder="Search handcrafted products..."
+                            aria-label="Search products">
+                        <button class="btn" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Navigation Categories Links -->
+                <ul class="navbar-nav flex-column flex-lg-row flex-wrap column-gap-4 row-gap-1 py-2 py-lg-0">
+                    {% for category in nav_categories %}
+                    <li class="nav-item">
+                        <a class="nav-link py-2 py-lg-0 px-0" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Mobile Extra Links -->
+                <div class="d-lg-none pt-3 mt-2 border-top">
+                    <a href="{% url 'orders:order_list' %}" class="d-flex align-items-center gap-2 text-decoration-none text-dark py-2 fw-semibold">
+                        <i class="bi bi-box-seam text-muted"></i> My Orders & Tracking
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+</header>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Shop by Category | Tesha Handicrafts{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+    <h1 class="tesha-display h3 mb-4">Shop by Category</h1>
+
+    {% if categories %}
+    <div class="row g-3 g-md-4">
+        {% for category in categories %}
+        <div class="col-6 col-md-4 col-lg-3">
+            {% include "partials/category_card.html" with category=category %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No categories yet — add some from the Django admin panel.</p>
+    {% endif %}
+</section>
+{% endblock %}

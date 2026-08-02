@@ -1,0 +1,25 @@
+{# Slim utility bar above the main navbar. Hidden on small screens to save space. #}
+<div class="tesha-topbar d-none d-md-block">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <span>
+                <i class="bi bi-truck me-1"></i>
+                {{ site_settings.topbar_text }}
+            </span>
+            <nav aria-label="Utility links">
+                <ul class="list-inline mb-0 d-flex gap-3">
+                    {# TODO: swap href="#" for {% url 'orders:track' %} once the orders app URLs are built #}
+                    <li class="list-inline-item">
+                        <a href="#">Track Order</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">Help Centre</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">Sell on Tesha</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

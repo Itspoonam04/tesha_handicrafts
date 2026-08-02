@@ -1,0 +1,653 @@
+/*
+  Tesha Handicrafts — theme tokens
+  ---------------------------------
+  Bootstrap 5 supplies the grid, components, and utilities.
+  This file only overrides design tokens (color, type, radius, shadow)
+  and defines a handful of brand-specific classes. Do not add inline
+  styles in templates — extend this file instead.
+*/
+
+:root {
+  /* Brand palette */
+  --tesha-terracotta: #b5502f;
+  --tesha-terracotta-dark: #8f3e23;
+  --tesha-cream: #faf5ec;
+  --tesha-cream-dark: #f1e6d3;
+  --tesha-charcoal: #2b2420;
+  --tesha-olive: #6b7a4f;
+  --tesha-gold: #c8963e;
+
+  /* Semantic mapping onto Bootstrap variables */
+  --bs-primary: var(--tesha-terracotta);
+  --bs-primary-rgb: 181, 80, 47;
+  --bs-body-bg: var(--tesha-cream);
+  --bs-body-color: var(--tesha-charcoal);
+  --bs-link-color: var(--tesha-terracotta);
+  --bs-link-hover-color: var(--tesha-terracotta-dark);
+
+  /* Type */
+  --tesha-font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --tesha-font-body: "Poppins", "Segoe UI", sans-serif;
+
+  /* Radius & shadow */
+  --tesha-radius-sm: 6px;
+  --tesha-radius-md: 10px;
+  --tesha-radius-lg: 18px;
+  --tesha-shadow-card: 0 2px 14px rgba(43, 36, 32, 0.08);
+  --tesha-shadow-card-hover: 0 10px 24px rgba(43, 36, 32, 0.14);
+}
+
+body {
+  font-family: var(--tesha-font-body);
+  background-color: var(--tesha-cream);
+  color: var(--tesha-charcoal);
+}
+
+h1, h2, h3, h4,
+.tesha-display {
+  font-family: var(--tesha-font-display);
+  font-weight: 600;
+  color: var(--tesha-charcoal);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Buttons                                                                */
+/* ---------------------------------------------------------------------- */
+
+.btn-tesha-primary {
+  background-color: var(--tesha-terracotta);
+  border-color: var(--tesha-terracotta);
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: var(--tesha-radius-sm);
+}
+
+.btn-tesha-primary:hover,
+.btn-tesha-primary:focus {
+  background-color: var(--tesha-terracotta-dark);
+  border-color: var(--tesha-terracotta-dark);
+  color: #fff;
+}
+
+.btn-tesha-outline {
+  background-color: transparent;
+  border: 1px solid var(--tesha-charcoal);
+  color: var(--tesha-charcoal);
+  border-radius: var(--tesha-radius-sm);
+}
+
+.btn-tesha-outline:hover {
+  background-color: var(--tesha-charcoal);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Top utility bar                                                       */
+/* ---------------------------------------------------------------------- */
+
+.tesha-topbar {
+  background-color: var(--tesha-charcoal);
+  color: var(--tesha-cream);
+  font-size: 0.8125rem;
+}
+
+.tesha-topbar a {
+  color: var(--tesha-cream);
+  opacity: 0.85;
+}
+
+.tesha-topbar a:hover {
+  opacity: 1;
+  color: var(--tesha-gold);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Main navbar                                                           */
+/* ---------------------------------------------------------------------- */
+
+
+
+.tesha-icon-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: var(--tesha-terracotta);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 50rem;
+  min-width: 16px;
+  text-align: center;
+}
+
+.tesha-search-form .form-control {
+  border-radius: var(--tesha-radius-sm) 0 0 var(--tesha-radius-sm);
+  border-color: var(--tesha-cream-dark);
+  background-color: #fff;
+}
+
+.tesha-search-form .btn {
+  border-radius: 0 var(--tesha-radius-sm) var(--tesha-radius-sm) 0;
+  background-color: var(--tesha-terracotta);
+  border-color: var(--tesha-terracotta);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Cards (category + product)                                            */
+/* ---------------------------------------------------------------------- */
+
+.tesha-card {
+  background-color: #fff;
+  border: none;
+  border-radius: var(--tesha-radius-md);
+  box-shadow: var(--tesha-shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+}
+
+.tesha-card:hover {
+  box-shadow: var(--tesha-shadow-card-hover);
+  transform: translateY(-3px);
+}
+
+.tesha-card-img-wrap {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: var(--tesha-cream-dark);
+}
+
+.tesha-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tesha-card:hover .tesha-card-img-wrap img {
+  transform: scale(1.05);
+}
+
+.tesha-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--tesha-olive);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 50rem;
+}
+
+.tesha-wishlist-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  color: var(--tesha-charcoal);
+  border: none;
+}
+
+.tesha-wishlist-toggle:hover {
+  color: var(--tesha-terracotta);
+}
+
+.tesha-price {
+  font-weight: 600;
+  color: var(--tesha-charcoal);
+}
+
+.tesha-price-strike {
+  color: #9a9088;
+  text-decoration: line-through;
+  font-size: 0.85rem;
+}
+
+.tesha-rating {
+  color: var(--tesha-gold);
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                   */
+/* ---------------------------------------------------------------------- */
+
+.tesha-hero {
+  background-color: var(--tesha-cream-dark);
+  border-radius: var(--tesha-radius-lg);
+  overflow: hidden;
+}
+
+.tesha-hero-image {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+}
+
+.tesha-hero-content {
+  padding: 3rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Category tiles                                                        */
+/* ---------------------------------------------------------------------- */
+
+/* Shop by Category - Homepage Circular Section & Tiles */
+
+.tesha-category-tile {
+  position: relative;
+  border-radius: var(--tesha-radius-md);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  display: block;
+}
+
+.tesha-category-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tesha-category-tile:hover img {
+  transform: scale(1.06);
+}
+
+.tesha-category-tile-label {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: linear-gradient(to top, rgba(43, 36, 32, 0.75), transparent);
+  color: #fff;
+  padding: 1rem 0.75rem 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Circular category icons — homepage "Shop by Category" row */
+
+.tesha-category-circle-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.tesha-category-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--tesha-cream-dark, #e6dedd);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tesha-category-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tesha-category-circle i {
+  font-size: 1.75rem;
+  color: var(--tesha-terracotta);
+}
+
+.tesha-category-circle-link:hover .tesha-category-circle {
+  border-color: var(--tesha-terracotta, #b85d38);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tesha-category-circle-label {
+  display: block;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--tesha-charcoal);
+  margin-top: 8px;
+  line-height: 1.2;
+}
+
+/* Responsive adjustments for circle row layout */
+@media (min-width: 768px) {
+  .tesha-category-circle {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* Festival collection banners */
+
+.tesha-festival-banner {
+  position: relative;
+  border-radius: var(--tesha-radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  color: #fff;
+  display: block;
+}
+
+.tesha-festival-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tesha-festival-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43, 36, 32, 0.75), rgba(43, 36, 32, 0.1));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+}
+
+/* Video testimonials */
+
+.tesha-testimonial-card {
+  background-color: #fff;
+  border-radius: var(--tesha-radius-md);
+  box-shadow: var(--tesha-shadow-card);
+  overflow: hidden;
+}
+
+.tesha-testimonial-video-wrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background-color: var(--tesha-charcoal);
+  overflow: hidden;
+}
+
+.tesha-testimonial-video-wrap img,
+.tesha-testimonial-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tesha-testimonial-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--tesha-terracotta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  border: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                 */
+/* ---------------------------------------------------------------------- */
+
+.tesha-footer {
+  background-color: var(--tesha-charcoal);
+  color: var(--tesha-cream-dark);
+}
+
+.tesha-footer a {
+  color: var(--tesha-cream-dark);
+}
+
+.tesha-footer a:hover {
+  color: var(--tesha-gold);
+}
+
+.tesha-footer h6 {
+  color: #fff;
+  font-family: var(--tesha-font-body);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.tesha-footer-bottom {
+  background-color: #201b17;
+  font-size: 0.85rem;
+}
+
+.tesha-social-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(250, 245, 236, 0.25);
+  border-radius: 50%;
+}
+
+.tesha-social-icon:hover {
+  border-color: var(--tesha-gold);
+  background-color: var(--tesha-gold);
+  color: var(--tesha-charcoal) !important;
+}
+/* Order History / Tracking Page Styles */
+
+.container h2 {
+  font-family: var(--tesha-display, serif);
+  color: var(--tesha-charcoal, #222);
+  font-weight: 600;
+}
+
+.table {
+  color: var(--tesha-charcoal, #222);
+  background-color: #fff;
+  border-radius: var(--tesha-radius-md, 8px);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.table th {
+  background-color: var(--tesha-cream-dark, #f4efe9) !important;
+  color: var(--tesha-charcoal, #222);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #e6dedd;
+  padding: 1rem;
+}
+
+.table td {
+  padding: 1rem;
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+/* Status Badge customizations */
+.table .badge {
+  padding: 0.5em 0.75em;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  border-radius: 4px;
+}
+
+/* Action button inside order row */
+.table .btn-outline-dark {
+  border-color: var(--tesha-charcoal, #222);
+  color: var(--tesha-charcoal, #222);
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.table .btn-outline-dark:hover {
+  background-color: var(--tesha-terracotta, #b85d38);
+  border-color: var(--tesha-terracotta, #b85d38);
+  color: #fff;
+}
+
+.tesha-festival-banner-overlay {
+  pointer-events: none; /* Ensures click passes through to the anchor tag */
+}
+
+/* Festival Collection Detail / Product List Page */
+
+.container h2.tesha-display {
+  font-family: var(--tesha-display, serif);
+  color: var(--tesha-charcoal, #222);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+  text-transform: capitalize;
+}
+
+/* Fallback message styling when no products are in the collection */
+.container .text-muted {
+  font-size: 1rem;
+  color: #777 !important;
+  background-color: var(--tesha-cream-dark, #f4efe9);
+  border-radius: var(--tesha-radius-md, 8px);
+  padding: 3rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Founder's Story Section Styling */
+
+.container .row.align-items-center {
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.container .row img.img-fluid {
+  transition: transform 0.3s ease;
+}
+
+.container .row img.img-fluid:hover {
+  transform: scale(1.01);
+}
+
+/* ==================== NAVBAR & MOBILE LOGO FIX ==================== */
+
+/* Larger Custom Logo Sizing */
+.tesha-navbar-logo {
+  max-height: 50px !important; /* Scaled perfectly for mobile header bar */
+  width: auto !important;
+  object-fit: contain;
+}
+
+/* Mobile Brand Container: Fits text & logo gracefully side by side */
+.tesha-mobile-brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 65vw; /* Prevents text from overflowing into the hamburger menu */
+  overflow: hidden;
+}
+
+.tesha-brand-text {
+  font-family: var(--tesha-font-display, serif);
+  font-size: 0.95rem; /* Clean readable size that fits small screens */
+  font-weight: 700;
+  color: var(--tesha-charcoal, #2c2c2c);
+  line-height: 1.1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Allows wrapping to 2 lines cleanly if screen is very narrow */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 992px) {
+  /* Hide mobile brand layout text on desktop screens */
+  .tesha-mobile-brand-wrapper {
+    display: none;
+    max-width: none;
+  }
+  
+  .tesha-navbar-logo {
+    max-height: 75px !important; /* Larger logo on desktop */
+  }
+}
+
+/* ==================== MOBILE NAVIGATION FIXES ==================== */
+
+/* ==================== FINAL MOBILE NAVBAR ALIGNMENT FIX ==================== */
+
+@media (max-width: 991.98px) {
+  /* Enforce single-row flex layout for mobile header */
+  .tesha-navbar .navbar {
+    display: flex;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  /* Compact brand container so it doesn't wrap awkwardly */
+  .tesha-mobile-brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 54vw;
+  }
+
+  /* Optimized mobile logo height */
+  .tesha-navbar-logo {
+    max-height: 32px !important;
+    width: auto !important;
+    object-fit: contain;
+  }
+
+  /* Refined font size for "Tesha Handicrafts" to fit neatly on mobile */
+  .tesha-brand-text {
+    font-family: var(--tesha-font-display, serif);
+    font-size: 0.78rem !important;
+    font-weight: 700;
+    color: var(--tesha-charcoal, #2c2c2c);
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* Make sure right-side action buttons stay compact and inline */
+  .tesha-navbar .d-flex.align-items-center.gap-2.d-lg-none {
+    gap: 0.35rem !important;
+    flex-shrink: 0;
+  }
+
+  /* Mobile menu dropdown box look */
+  .tesha-navbar .navbar-collapse {
+    background-color: var(--tesha-cream);
+    padding: 1rem 1.25rem;
+    margin-top: 0.5rem;
+    border-radius: var(--tesha-radius-md);
+    border: 1px solid var(--tesha-cream-dark);
+    box-shadow: var(--tesha-shadow-card);
+  }
+
+  .tesha-navbar .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(43, 36, 32, 0.04);
+  }
+}

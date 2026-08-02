@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{% if search_query %}Search results for "{{ search_query }}"{% else %}Shop All Handicrafts{% endif %} | Tesha Handicrafts{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+
+    <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="tesha-display h3 mb-1">
+                {% if search_query %}
+                    Search results for &ldquo;{{ search_query }}&rdquo;
+                {% else %}
+                    Shop All Handicrafts
+                {% endif %}
+            </h1>
+            <p class="text-muted mb-0">{{ products.count }} product{{ products.count|pluralize }} found</p>
+        </div>
+
+        <form class="tesha-search-form" role="search" method="get" action="{% url 'products:list' %}">
+            <div class="input-group" style="max-width: 320px;">
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ search_query }}"
+                    class="form-control"
+                    placeholder="Search products..."
+                    aria-label="Search products">
+                <button class="btn" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if products %}
+    <div class="row g-3 g-md-4">
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-3">
+            {% include "partials/product_card.html" with product=product %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+        <h2 class="h5">No products found</h2>
+        <p class="text-muted">Try a different search term or browse all categories.</p>
+        <a href="{% url 'categories:list' %}" class="btn btn-tesha-primary mt-2">Browse Categories</a>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

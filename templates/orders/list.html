@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">My Orders</h2>
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total Cost</th>
+                    <th>Payment Status</th>
+                    <th>Fulfillment Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    # Added a fallback if order.id isn't present
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.created|date:"M d, Y" }}</td>
+                    <td>₹{{ order.get_total_cost }}</td>
+                    <td>
+                        {% if order.paid %}
+                            <span class="badge bg-success">Paid</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Unpaid</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge 
+                            {% if order.status == 'Delivered' %}bg-success
+                            {% elif order.status == 'Shipped' %}bg-info text-dark
+                            {% elif order.status == 'Processing' %}bg-primary
+                            {% elif order.status == 'Cancelled' %}bg-danger
+                            {% else %}bg-secondary{% endif %}">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'orders:order_detail' order.id %}" class="btn btn-sm btn-outline-dark">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>You haven't placed any orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

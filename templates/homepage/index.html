@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tesha Handicrafts | Authentic Indian Handmade Crafts{% endblock %}
+
+{% block content %}
+
+<!-- ==================== HERO CAROUSEL ==================== -->
+<section class="container py-4">
+    {% if hero_slides %}
+    <div id="heroCarousel" class="carousel slide tesha-hero" data-bs-ride="carousel">
+
+        {% if hero_slides.count > 1 %}
+        <div class="carousel-indicators">
+            {% for slide in hero_slides %}
+            <button
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}"
+                aria-current="{% if forloop.first %}true{% endif %}"
+                aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="carousel-inner">
+            {% for slide in hero_slides %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="row g-0 align-items-stretch">
+                    <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex align-items-center">
+                        <div class="tesha-hero-content">
+                            <p class="text-uppercase small fw-semibold mb-2" style="letter-spacing:.08em; color:var(--tesha-olive);">
+                                Made with Love. Delivered with Pride.
+                            </p>
+                            <h1 class="tesha-display display-5 mb-3">{{ slide.title }}</h1>
+                            {% if slide.subtitle %}
+                            <p class="lead mb-4">{{ slide.subtitle }}</p>
+                            {% endif %}
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{{ slide.cta_url }}" class="btn btn-tesha-primary btn-lg px-4">
+                                    {{ slide.cta_text }}
+                                </a>
+                                {% if slide.secondary_cta_text %}
+                                <a href="{{ slide.secondary_cta_url }}" class="btn btn-tesha-outline btn-lg px-4">
+                                    {{ slide.secondary_cta_text }}
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 order-1 order-lg-2">
+                        <img src="{{ slide.image.url }}" alt="{{ slide.title }}" class="tesha-hero-image">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if hero_slides.count > 1 %}
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+<!-- ==================== SHOP BY CATEGORY (circular icons) ==================== -->
+{% if featured_categories %}
+<section class="container py-4 py-md-5">
+    <!-- Section Header with Side Accents -->
+    <div class="text-center mb-4">
+        <h2 class="tesha-section-title">
+            <span class="tesha-ornament">❖</span> 
+            SHOP BY CATEGORY 
+            <span class="tesha-ornament">❖</span>
+        </h2>
+    </div>
+
+    <!-- Categories Row -->
+    <div class="row g-3 g-md-4 justify-content-center">
+        {% for category in featured_categories %}
+        <div class="col-4 col-sm-3 col-md-auto tesha-category-col">
+            {% include "partials/category_circle.html" with category=category %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- ==================== BEST SELLERS ==================== -->
+{% if featured_products %}
+<section class="container py-4 py-md-5">
+    <h2 class="tesha-display h4 text-center mb-4">Best Sellers</h2>
+
+    <div class="row g-3 g-md-4">
+        {% for product in featured_products %}
+        <div class="col-6 col-md-4 col-lg-2">
+            {% include "partials/product_card.html" with product=product %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'products:list' %}" class="btn btn-tesha-outline px-4">View All Products</a>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==================== FESTIVAL COLLECTION ==================== -->
+{% if festival_banners %}
+<section class="container py-4 py-md-5">
+    <h2 class="tesha-display h4 text-center mb-4">Festival Collection</h2>
+
+    <div class="row g-3 g-md-4">
+        {% for banner in festival_banners %}
+<div class="col-6 col-md-3">
+    {% if banner.slug %}
+        <a href="{% url 'products:festival_collection' banner.slug %}" class="tesha-festival-banner">
+    {% else %}
+        <a href="#" class="tesha-festival-banner">
+    {% endif %}
+
+        <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+
+        <div class="tesha-festival-banner-overlay">
+            <h3 class="h6 mb-2">{{ banner.title }}</h3>
+            <span class="btn btn-tesha-primary btn-sm">
+                Shop Now
+            </span>
+        </div>
+    </a>
+</div>
+{% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- ==================== FOUNDER'S STORY ==================== -->
+<section class="container py-4 py-md-5">
+    <div class="row align-items-center g-4 p-4 p-md-5" style="background-color: var(--tesha-cream-dark, #f4efe9); border-radius: var(--tesha-radius-lg, 12px);">
+        <!-- Founder Image -->
+        <div class="col-12 col-md-5 text-center">
+            <img src="{% static 'images/founder.jpg' %}" alt="Gautami Aher - Founder of Tesha Handicrafts" class="img-fluid shadow-sm" style="border-radius: var(--tesha-radius-md, 8px); max-height: 400px; object-fit: cover; width: 100%;">
+        </div>
+        
+        <!-- Founder Blog / Story Content -->
+        <div class="col-12 col-md-7">
+            <p class="text-uppercase small fw-semibold mb-2" style="letter-spacing: .08em; color: var(--tesha-olive);">
+                Meet The Artisan & Founder
+            </p>
+            <h2 class="tesha-display h3 mb-3">Crafting Heritage with Love</h2>
+            <p class="text-muted mb-3" style="line-height: 1.7;">
+                "Hi, I am <strong>Gautami Aher</strong>, the heart and hands behind Tesha Handicrafts. My journey began with a deep passion for preserving traditional Indian craftsmanship and giving it a modern, personalized touch. Every piece we create is designed to bring warmth, culture, and artistry straight into your homes."
+            </p>
+            <p class="text-muted mb-4" style="line-height: 1.7;">
+                From hand-painted decor to bespoke festival collections, our mission is to support local artisans and celebrate life's special moments through authentic handmade creations.
+            </p>
+            <div class="d-flex align-items-center gap-3">
+                <span class="fw-bold tesha-display" style="font-size: 1.1rem; color: var(--tesha-charcoal);">Gautami Aher</span>
+                <span class="text-muted small">— Founder, Tesha Handicrafts</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==================== WHY CHOOSE TESHA + CUSTOMER REVIEWS ==================== -->
+<section class="container py-4 py-md-5">
+    <div class="row g-4">
+
+        <!-- Why choose us -->
+        <div class="col-12 col-lg-4">
+            <div class="p-4 h-100" style="background-color:var(--tesha-cream-dark); border-radius:var(--tesha-radius-lg);">
+                <h2 class="tesha-display h5 mb-4">Why Choose Tesha?</h2>
+                <div class="row g-3 text-center">
+                    <div class="col-6">
+                        <i class="bi bi-heart fs-3 d-block mb-1" style="color:var(--tesha-terracotta);"></i>
+                        <p class="small fw-semibold mb-0">Handmade with Love</p>
+                    </div>
+                    <div class="col-6">
+                        <i class="bi bi-award fs-3 d-block mb-1" style="color:var(--tesha-terracotta);"></i>
+                        <p class="small fw-semibold mb-0">Premium Materials</p>
+                    </div>
+                    <div class="col-6">
+                        <i class="bi bi-pencil fs-3 d-block mb-1" style="color:var(--tesha-terracotta);"></i>
+                        <p class="small fw-semibold mb-0">Customized Designs</p>
+                    </div>
+                    <div class="col-6">
+                        <i class="bi bi-shield-lock fs-3 d-block mb-1" style="color:var(--tesha-terracotta);"></i>
+                        <p class="small fw-semibold mb-0">Secure Payments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer video reviews -->
+        {% if testimonials %}
+        <div class="col-12 col-lg-8">
+            <h2 class="tesha-display h5 mb-4">Customer Reviews</h2>
+            <div class="row g-3">
+                {% for testimonial in testimonials %}
+                <div class="col-6 col-md-3">
+                    <div class="tesha-testimonial-card">
+                        <div class="tesha-testimonial-video-wrap">
+                            {% if testimonial.video_file %}
+                            <video src="{{ testimonial.video_file.url }}" preload="metadata" muted playsinline
+                                {% if testimonial.photo %}poster="{{ testimonial.photo.url }}"{% endif %}></video>
+                            <button type="button" class="tesha-testimonial-play-btn" aria-label="Play video">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                            {% elif testimonial.video_embed_url %}
+                            {% if testimonial.photo %}
+                            <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.customer_name }}">
+                            {% endif %}
+                            <button type="button" class="tesha-testimonial-play-btn" data-embed-url="{{ testimonial.video_embed_url }}" aria-label="Watch video">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                            {% elif testimonial.photo %}
+                            <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.customer_name }}">
+                            {% endif %}
+                        </div>
+                        <div class="p-2">
+                            <p class="fw-semibold small mb-0">{{ testimonial.customer_name }}</p>
+                            <div class="tesha-rating small mb-1">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                        <i class="bi bi-star-fill"></i>
+                                    {% else %}
+                                        <i class="bi bi-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="small text-muted mb-0">{{ testimonial.quote }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ==================== CUSTOMIZATION PROCESS ==================== -->
+<section class="container py-4 py-md-5">
+    <h2 class="tesha-display h4 text-center mb-4">Our Customization Process</h2>
+
+    <div class="row g-4 text-center">
+        <div class="col-6 col-md-3">
+            <i class="bi bi-bag-check fs-2 d-block mb-2" style="color:var(--tesha-terracotta);"></i>
+            <p class="fw-semibold small mb-1">1. Choose Product</p>
+            <p class="text-muted small mb-0">Select your favorite piece</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="bi bi-pencil-square fs-2 d-block mb-2" style="color:var(--tesha-terracotta);"></i>
+            <p class="fw-semibold small mb-1">2. Share Name/Design</p>
+            <p class="text-muted small mb-0">Tell us your preferences</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="bi bi-hammer fs-2 d-block mb-2" style="color:var(--tesha-terracotta);"></i>
+            <p class="fw-semibold small mb-1">3. We Craft It</p>
+            <p class="text-muted small mb-0">Handmade with perfection</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="bi bi-truck fs-2 d-block mb-2" style="color:var(--tesha-terracotta);"></i>
+            <p class="fw-semibold small mb-1">4. Doorstep Delivery</p>
+            <p class="text-muted small mb-0">Delivered with care</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/testimonials.js' %}"></script>
+{% endblock %}

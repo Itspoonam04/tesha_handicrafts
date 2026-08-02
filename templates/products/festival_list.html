@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="tesha-display text-center mb-4">{{ banner.title }}</h2>
+    
+    {% if products %}
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-6 col-md-3">
+            {% include "partials/product_card.html" with product=product %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-muted py-5">No products found in this collection yet. Check back soon!</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{# Circular category icon used on the homepage "Shop by Category" row. #}
+{# For the full category grid page, use category_card.html instead. #}
+<a href="{{ category.get_absolute_url }}" class="tesha-category-circle-link text-decoration-none">
+    <div class="tesha-category-circle mx-auto mb-2">
+        {% if category.icon_image %}
+        <img src="{{ category.icon_image.url }}" alt="{{ category.name }}">
+        {% elif category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+        {% else %}
+        <i class="bi bi-shop"></i>
+        {% endif %}
+    </div>
+    <span class="tesha-category-circle-label">{{ category.name }}</span>
+</a>

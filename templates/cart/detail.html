@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Cart | Tesha Handicrafts{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+    <h1 class="tesha-display h3 mb-4">Your Cart</h1>
+
+    {% if items %}
+    <div class="row g-4">
+        <div class="col-12 col-lg-8">
+            <div class="d-flex flex-column gap-3">
+                {% for item in items %}
+                <div class="tesha-card p-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-3 col-md-2">
+                            <div class="tesha-card-img-wrap" style="border-radius: var(--tesha-radius-sm);">
+                                {% if item.product.primary_image %}
+                                <img src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                                {% else %}
+                                <img src="{% static 'img/placeholder-product.svg' %}" alt="{{ item.product.name }}">
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-9 col-md-4">
+                            <a href="{{ item.product.get_absolute_url }}" class="text-reset text-decoration-none">
+                                <h2 class="h6 mb-1">{{ item.product.name }}</h2>
+                            </a>
+                            <p class="tesha-price small mb-0">&#8377;{{ item.product.price }}</p>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex align-items-center gap-2">
+                                {% csrf_token %}
+                                <label for="qty-{{ item.id }}" class="visually-hidden">Quantity</label>
+                                <input
+                                    type="number"
+                                    id="qty-{{ item.id }}"
+                                    name="quantity"
+                                    class="form-control form-control-sm"
+                                    style="width: 70px;"
+                                    value="{{ item.quantity }}"
+                                    min="1"
+                                    max="{{ item.product.stock_quantity }}">
+                                <button type="submit" class="btn btn-tesha-outline btn-sm">Update</button>
+                            </form>
+                        </div>
+
+                        <div class="col-4 col-md-2 text-md-end">
+                            <span class="fw-semibold">&#8377;{{ item.line_total }}</span>
+                        </div>
+
+                        <div class="col-2 col-md-1 text-end">
+                            <form method="post" action="{% url 'cart:remove' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-link text-danger p-0" aria-label="Remove {{ item.product.name }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Order summary -->
+        <div class="col-12 col-lg-4">
+            <div class="tesha-card p-4">
+                <h2 class="h5 mb-3">Order Summary</h2>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal ({{ cart.total_items }} item{{ cart.total_items|pluralize }})</span>
+                    <span>&#8377;{{ cart.subtotal }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Shipping</span>
+                    <span class="text-success">Calculated at checkout</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-4">
+                    <strong>Total</strong>
+                    <strong>&#8377;{{ cart.subtotal }}</strong>
+                </div>
+                {# TODO: swap href="#" for {% url 'orders:checkout' %} once the orders app is built #}
+                <a href="#" class="btn btn-tesha-primary w-100">
+                    Proceed to Checkout
+                </a>
+                <a href="{% url 'products:list' %}" class="btn btn-tesha-outline w-100 mt-2">
+                    Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-bag-x fs-1 text-muted mb-3 d-block"></i>
+        <h2 class="h5">Your cart is empty</h2>
+        <p class="text-muted">Browse our collection and add something you love.</p>
+        <a href="{% url 'products:list' %}" class="btn btn-tesha-primary mt-2">Shop Now</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

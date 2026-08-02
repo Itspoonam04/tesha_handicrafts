@@ -1,0 +1,16 @@
+from django.contrib import admin
+
+from .models import Cart, CartItem
+
+
+class CartItemInline(admin.TabularInline):
+    model = CartItem
+    extra = 0
+    readonly_fields = ("product", "quantity", "added_at")
+
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ("session_key", "total_items", "subtotal", "updated_at")
+    inlines = [CartItemInline]
+    readonly_fields = ("session_key", "created_at", "updated_at")
