@@ -17,6 +17,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-CHANGE-THIS-BEFORE-PRODUCTION"
 
 import os
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
 
 import os
 
@@ -36,7 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.humanize",  # nice number/currency formatting in templates
+    "django.contrib.humanize", 
+    "cloudinary",
+    "cloudinary_storage", # nice number/currency formatting in templates
 
     # Tesha Handicrafts apps
     "homepage",
@@ -144,11 +151,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" 
 # ---------------------------------------------------------------------------
 # Media files (user/admin-uploaded product images, etc.)
 # ---------------------------------------------------------------------------
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
+# MEDIA_URL = "media/"
+# MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ---------------------------------------------------------------------------
