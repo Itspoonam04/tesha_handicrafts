@@ -18,7 +18,9 @@ SECRET_KEY = "django-insecure-CHANGE-THIS-BEFORE-PRODUCTION"
 
 import os
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
+import os
+
+DEBUG = os.environ.get("RENDER") is None
 
 ALLOWED_HOSTS = [
    "*"
@@ -144,6 +146,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" 
 # ---------------------------------------------------------------------------
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
