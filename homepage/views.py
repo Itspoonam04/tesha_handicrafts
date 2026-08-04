@@ -27,7 +27,7 @@
 
 #     return render(request, "homepage/index.html", context)
 
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("Homepage works")
+    return render(request, "homepage/index.html")
