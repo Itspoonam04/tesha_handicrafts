@@ -142,20 +142,23 @@ USE_TZ = True
 # ---------------------------------------------------------------------------
 # Static files (CSS, JavaScript, images shipped with the codebase)
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Static files
+# ---------------------------------------------------------------------------
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" # used by collectstatic in production
+# Django 5 storage configuration
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-# ---------------------------------------------------------------------------
-# Media files (user/admin-uploaded product images, etc.)
-# ---------------------------------------------------------------------------
-# MEDIA_URL = "media/"
-# MEDIA_ROOT = BASE_DIR / "media"
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ---------------------------------------------------------------------------
