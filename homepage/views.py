@@ -35,14 +35,10 @@ def index(request):
     hero_slides = HeroSlide.objects.filter(is_active=True)
     festival_banners = FestivalBanner.objects.filter(is_active=True)
     testimonials = Testimonial.objects.filter(is_active=True)
-    featured_products = (
-    Product.objects.filter(
+    featured_categories = Category.objects.filter(
         is_active=True,
-        is_bestseller=True
-    )
-    .select_related("category")
-    .prefetch_related("images")
-)[:6]
+        parent=None
+    )[:8]
 
     return render(request, "homepage/index.html", {
         "hero_slides": hero_slides,
