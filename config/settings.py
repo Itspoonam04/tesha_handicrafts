@@ -29,7 +29,7 @@ CLOUDINARY_STORAGE = {
 
 import os
 
-DEBUG = os.environ.get("RENDER") is None
+DEBUG = True
 
 ALLOWED_HOSTS = [
    "*"
