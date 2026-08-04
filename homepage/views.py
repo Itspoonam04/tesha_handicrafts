@@ -47,7 +47,7 @@
 #         "featured_categories": featured_categories,
 #     })
 
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("WORKING")
+    return render(request, "homepage/index.html")

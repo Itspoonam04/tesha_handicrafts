@@ -89,7 +89,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Custom context processor: injects cart/wishlist counts,
                 # site-wide categories for the navbar, etc. across all pages.
-                "homepage.context_processors.site_globals",
+                # "homepage.context_processors.site_globals",
             ],
         },
     },
