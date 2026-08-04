@@ -48,7 +48,7 @@
 #     })
 
 from django.shortcuts import render
-from .models import HeroSlide, FestivalBanner
+from .models import HeroSlide, FestivalBanner, Testimonial
 from categories.models import Category
 
 def index(request):
@@ -63,8 +63,13 @@ def index(request):
         is_active=True
     )
 
+    testimonials = Testimonial.objects.filter(
+        is_active=True
+    ).order_by("display_order")[:6]
+
     return render(request, "homepage/index.html", {
         "hero_slides": hero_slides,
         "featured_categories": featured_categories,
         "festival_banners": festival_banners,
+        "testimonials": testimonials,
     })
