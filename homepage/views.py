@@ -49,10 +49,17 @@
 
 from django.shortcuts import render
 from .models import HeroSlide
+from categories.models import Category
 
 def index(request):
     hero_slides = HeroSlide.objects.filter(is_active=True)
 
+    featured_categories = Category.objects.filter(
+        is_active=True,
+        parent=None
+    )[:8]
+
     return render(request, "homepage/index.html", {
         "hero_slides": hero_slides,
+        "featured_categories": featured_categories,
     })
