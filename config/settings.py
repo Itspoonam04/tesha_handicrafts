@@ -1,10 +1,8 @@
 """
-Django settings for Tesha Handicrafts.
+Django settings for the Tesha Handicrafts project.
 """
 
 from pathlib import Path
-import os
-from django.contrib.messages import constants as message_constants
 
 # ---------------------------------------------------------------------------
 # Base paths
@@ -13,27 +11,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ---------------------------------------------------------------------------
 # Security
+# NOTE: Before deploying, move SECRET_KEY and DEBUG into environment
+# variables (e.g. using django-environ or python-decouple).
 # ---------------------------------------------------------------------------
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-CHANGE-THIS-BEFORE-PRODUCTION"
-)
+SECRET_KEY = "django-insecure-CHANGE-THIS-BEFORE-PRODUCTION"
 
-DEBUG = os.environ.get("RENDER") is None
-
-ALLOWED_HOSTS = ["*"]
-
-# ---------------------------------------------------------------------------
-# Cloudinary
-# ---------------------------------------------------------------------------
+import os
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
     "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
 
+import os
+
+DEBUG = os.environ.get("RENDER") is None
+
+ALLOWED_HOSTS = [
+   "*"
+]
+
 # ---------------------------------------------------------------------------
-# Installed Apps
+# Applications
 # ---------------------------------------------------------------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -42,12 +41,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.humanize",
-
+    "django.contrib.humanize", 
     "cloudinary",
-    "cloudinary_storage",
+    "cloudinary_storage", # nice number/currency formatting in templates
 
-    # Project Apps
+    # Tesha Handicrafts apps
     "homepage",
     "products",
     "categories",
@@ -63,9 +61,6 @@ INSTALLED_APPS = [
     "customization",
 ]
 
-# ---------------------------------------------------------------------------
-# Middleware
-# ---------------------------------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -79,13 +74,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# ---------------------------------------------------------------------------
-# Templates
-# ---------------------------------------------------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        # Project-level templates directory (shared base.html, partials, etc.)
         "DIRS": [BASE_DIR / "templates"],
+        # Also allow each app to keep templates in <app>/templates/<app>/
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -93,6 +87,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # Custom context processor: injects cart/wishlist counts,
+                # site-wide categories for the navbar, etc. across all pages.
                 "homepage.context_processors.site_globals",
             ],
         },
@@ -103,6 +99,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # ---------------------------------------------------------------------------
 # Database
+# SQLite for local development. Swap to PostgreSQL for staging/production
+# (see the commented block below).
 # ---------------------------------------------------------------------------
 DATABASES = {
     "default": {
@@ -111,75 +109,68 @@ DATABASES = {
     }
 }
 
+# Production PostgreSQL example (uncomment and configure via env vars):
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("DB_NAME"),
+#         "USER": env("DB_USER"),
+#         "PASSWORD": env("DB_PASSWORD"),
+#         "HOST": env("DB_HOST", default="localhost"),
+#         "PORT": env("DB_PORT", default="5432"),
+#     }
+# }
+
 # ---------------------------------------------------------------------------
-# Password Validation
+# Password validation
 # ---------------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 # ---------------------------------------------------------------------------
 # Internationalization
 # ---------------------------------------------------------------------------
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Asia/Kolkata"
-
 USE_I18N = True
-
 USE_TZ = True
 
 # ---------------------------------------------------------------------------
-# Static Files
+# Static files (CSS, JavaScript, images shipped with the codebase)
 # ---------------------------------------------------------------------------
 STATIC_URL = "static/"
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ---------------------------------------------------------------------------
-# Django 6 Storage Configuration
-# ---------------------------------------------------------------------------
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" # used by collectstatic in production
 
 # ---------------------------------------------------------------------------
-# Default Auto Field
+# Media files (user/admin-uploaded product images, etc.)
 # ---------------------------------------------------------------------------
+# MEDIA_URL = "media/"
+# MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ---------------------------------------------------------------------------
-# Authentication
+# Auth redirects (used once the accounts app is built)
 # ---------------------------------------------------------------------------
 LOGIN_URL = "accounts:login"
-
 LOGIN_REDIRECT_URL = "homepage:index"
-
 LOGOUT_REDIRECT_URL = "homepage:index"
 
 # ---------------------------------------------------------------------------
-# Messages
+# django.contrib.messages tag -> Bootstrap 5 alert class mapping
+# (Django's default "error" tag has no matching Bootstrap "alert-error" class)
 # ---------------------------------------------------------------------------
+from django.contrib.messages import constants as message_constants
+
 MESSAGE_TAGS = {
     message_constants.DEBUG: "secondary",
     message_constants.INFO: "info",
