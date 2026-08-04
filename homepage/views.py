@@ -48,6 +48,11 @@
 #     })
 
 from django.shortcuts import render
+from .models import HeroSlide
 
 def index(request):
-    return render(request, "homepage/index.html", {})
+    hero_slides = HeroSlide.objects.filter(is_active=True)
+
+    return render(request, "homepage/index.html", {
+        "hero_slides": hero_slides,
+    })
