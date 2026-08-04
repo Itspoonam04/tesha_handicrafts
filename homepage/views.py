@@ -48,28 +48,45 @@
 #     })
 
 from django.shortcuts import render
+
 from .models import HeroSlide, FestivalBanner, Testimonial
 from categories.models import Category
+from products.models import Product
+
 
 def index(request):
-    hero_slides = HeroSlide.objects.filter(is_active=True)
+    # Hero Slider
+    hero_slides = HeroSlide.objects.filter(
+        is_active=True
+    ).order_by("display_order")
 
+    # Featured Categories
     featured_categories = Category.objects.filter(
         is_active=True,
         parent=None
     )[:8]
 
+    # Festival Banners
     festival_banners = FestivalBanner.objects.filter(
         is_active=True
-    )
+    ).order_by("display_order")
 
+    # Testimonials
     testimonials = Testimonial.objects.filter(
         is_active=True
     ).order_by("display_order")[:6]
 
-    return render(request, "homepage/index.html", {
+    # Featured Products
+    featured_products = Product.objects.filter(
+        is_active=True
+    ).prefetch_related("images")[:8]
+
+    context = {
         "hero_slides": hero_slides,
         "featured_categories": featured_categories,
         "festival_banners": festival_banners,
         "testimonials": testimonials,
-    })
+        "featured_products": featured_products,
+    }
+
+    return render(request, "homepage/index.html", context)
