@@ -28,11 +28,13 @@
 #     return render(request, "homepage/index.html", context)
 
 from django.shortcuts import render
-from .models import HeroSlide
+from .models import HeroSlide, FestivalBanner
 
 def index(request):
     hero_slides = HeroSlide.objects.filter(is_active=True)
+    festival_banners = FestivalBanner.objects.filter(is_active=True)
 
     return render(request, "homepage/index.html", {
         "hero_slides": hero_slides,
+        "festival_banners": festival_banners,
     })
