@@ -3,6 +3,10 @@ Django settings for the Tesha Handicrafts project.
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
 
 # ---------------------------------------------------------------------------
 # Base paths
