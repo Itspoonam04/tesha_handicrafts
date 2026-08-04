@@ -48,7 +48,7 @@
 #     })
 
 from django.shortcuts import render
-from .models import HeroSlide
+from .models import HeroSlide, FestivalBanner
 from categories.models import Category
 
 def index(request):
@@ -59,7 +59,12 @@ def index(request):
         parent=None
     )[:8]
 
+    festival_banners = FestivalBanner.objects.filter(
+        is_active=True
+    )
+
     return render(request, "homepage/index.html", {
         "hero_slides": hero_slides,
         "featured_categories": featured_categories,
+        "festival_banners": festival_banners,
     })
