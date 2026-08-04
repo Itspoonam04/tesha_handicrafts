@@ -25,9 +25,15 @@
         <div class="tesha-card-img-wrap">
 
             {% if product.primary_image %}
-                {{ product.primary_image.image.name }}
+                <img
+                    src="{{ product.primary_image.image.url }}"
+                    alt="{{ product.name }}"
+                    loading="lazy">
             {% else %}
-                No Image
+                <img
+                    src="{% static 'images/product-placeholder.png' %}"
+                    alt="{{ product.name }}"
+                    loading="lazy">
             {% endif %}
 
         </div>
